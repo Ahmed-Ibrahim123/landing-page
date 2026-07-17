@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmo Lite | رحلة البراند</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tan:#DCB483;
+    --tan-light:#EEDBB6;
+    --cream:#FBF5E9;
+    --ink:#2B1E14;
+    --ink-soft:#5b4a3a;
+    --teal:#1E4B4A;
+    --teal-deep:#0F2E2D;
+    --clay:#B9805A;
+    --alert:#C4432A;
+    --alert-light:#e8b7ab;
+    --shadow: 0 18px 40px -18px rgba(15,46,45,0.45);
+    --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--tan-light);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cairo',sans-serif;
+    margin:0;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    display:inline-block;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    color:var(--teal);
+    background:rgba(30,75,74,0.08);
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+
+  /* ============ URGENCY DROPDOWN BAR ============ */
+  .urgency{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--teal-deep);
+    color:var(--cream);
+  }
+  .urgency-toggle{
+    width:100%;
+    background:none;
+    color:inherit;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:10px 16px;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+  }
+  .urgency-toggle .flame{font-size:1.05rem;}
+  .urgency-toggle .clock{
+    font-variant-numeric:tabular-nums;
+    background:rgba(255,255,255,0.12);
+    padding:3px 10px;
+    border-radius:4px;
+    letter-spacing:0.03em;
+  }
+  .urgency-toggle .chev{
+    width:9px;height:9px;
+    border-right:2px solid currentColor;
+    border-bottom:2px solid currentColor;
+    transform:rotate(45deg);
+    transition:transform .25s ease;
+    margin-inline-start:4px;
+  }
+  .urgency.open .chev{transform:rotate(225deg);}
+  .urgency-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+    background:var(--teal);
+    position:relative;
+  }
+  .urgency.open .urgency-panel{max-height:220px;}
+  .urgency-panel::after{
+    content:"";
+    position:absolute;
+    inset-inline:0;
+    bottom:-1px;
+    height:10px;
+    background:
+      linear-gradient(135deg, var(--teal) 50%, transparent 50%) 0 0/16px 16px repeat-x;
+    opacity:.9;
+  }
+  .urgency-panel-inner{
+    max-width:640px;
+    margin:0 auto;
+    padding:22px 24px 30px;
+    text-align:center;
+  }
+  .urgency-panel-inner p{
+    margin:0 0 14px;
+    font-size:0.95rem;
+    line-height:1.9;
+    color:rgba(251,245,233,0.9);
+  }
+  .urgency-panel-inner strong{color:#F4C89B;}
+  .urgency-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--alert);
+    color:#fff;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    padding:12px 30px;
+    border-radius:4px;
+    font-size:0.95rem;
+    box-shadow:0 10px 24px -8px rgba(196,67,42,0.6);
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    background:var(--cream);
+    border-bottom:1px solid rgba(43,30,20,0.08);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 0;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand img{ width:100px;height:100px;border-radius:50%;object-fit:cover;}
+  .brand-name{
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:1.15rem;
+    letter-spacing:0.02em;
+    color:var(--teal-deep);
+  }
+  .nav-links{display:flex;gap:30px;align-items:center;}
+  .nav-links a{
+    font-weight:700;
+    font-size:0.9rem;
+    color:var(--ink-soft);
+  }
+  .nav-links a:hover{color:var(--teal);}
+  .nav-cta{
+    background:var(--teal);
+    color:#fff !important;
+    padding:10px 22px;
+    border-radius:4px;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:0.85rem;
+  }
+  .nav-mobile-hide{display:flex;}
+  @media(max-width:720px){
+    .nav-mobile-hide{display:none;}
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    padding:70px 0 90px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 85% 15%, rgba(185,128,90,0.28), transparent 55%),
+      var(--tan-light);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:50px;
+    align-items:center;
+  }
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero{padding:44px 0 60px;}
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,5vw,3.6rem);
+    font-weight:900;
+    line-height:1.12;
+    color:var(--ink);
+  }
+  .hero h1 span{
+    color:var(--teal);
+    position:relative;
+    white-space:nowrap;
+  }
+  .hero-sub{
+    margin-top:20px;
+    font-size:1.08rem;
+    line-height:1.9;
+    color:var(--ink-soft);
+    max-width:46ch;
+  }
+  .checklist{margin-top:26px;display:flex;flex-direction:column;gap:12px;}
+  .checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    font-weight:700;
+    font-size:1rem;
+    color:var(--ink);
+  }
+  .check-badge{
+    flex:none;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    margin-top:2px;
+  }
+  .check-badge svg{width:13px;height:13px;stroke:#fff;stroke-width:3;fill:none;}
+  .hero-actions{
+    margin-top:34px;
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--alert);
+    color:#fff;
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:1.02rem;
+    padding:16px 40px;
+    border-radius:4px;
+    box-shadow:0 16px 30px -12px rgba(196,67,42,0.55);
+    transition:transform .2s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .price-note{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .price-note s{opacity:0.6;margin-inline-start:6px;}
+
+  .hero-visual{
+    position:relative;
+    display:flex;
+    justify-content:center;
+  }
+  .hero-visual::before{
+    content:"";
+    position:absolute;
+    width:340px;height:340px;
+    background:var(--teal);
+    opacity:0.12;
+    border-radius:50%;
+    filter:blur(10px);
+    top:10%;
+  }
+  .book-photo{
+    position:relative;
+    width:min(680px,80%);
+    filter:drop-shadow(0 30px 40px rgba(15,46,45,0.35));
+    transform:rotate(-2deg);
+  }
+  .book-photo img{border-radius:6px;}
+
+  /* ============ PROCESS / JOURNEY STRIP ============ */
+  .journey{
+    background:var(--teal-deep);
+    padding:34px 0;
+  }
+  .journey ul{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px 6px;
+  }
+  .journey li{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .journey .step{
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:0.88rem;
+    color:var(--cream);
+    background:rgba(255,255,255,0.06);
+    padding:9px 18px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.12);
+  }
+  .journey .arrow{color:var(--clay);font-size:1rem;opacity:0.8;}
+  @media(max-width:640px){
+    .journey ul{flex-direction:column;align-items:stretch;}
+    .journey .arrow{transform:rotate(90deg);align-self:center;}
+    .journey .step{text-align:center;}
+  }
+
+  /* ============ SECTION HEADERS ============ */
+  .section{padding:90px 0;}
+  .section-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 50px;
+  }
+  .section-head h2{
+    font-size:clamp(1.8rem,3.4vw,2.4rem);
+    font-weight:800;
+    color:var(--ink);
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--ink-soft);
+    font-size:1.02rem;
+    line-height:1.8;
+  }
+  .torn-divider{
+    height:26px;
+    background:var(--cream);
+    clip-path:polygon(0% 100%,3% 30%,6% 100%,9% 40%,12% 100%,15% 20%,18% 100%,21% 45%,24% 100%,27% 15%,30% 100%,33% 50%,36% 100%,39% 25%,42% 100%,45% 55%,48% 100%,51% 20%,54% 100%,57% 40%,60% 100%,63% 15%,66% 100%,69% 45%,72% 100%,75% 25%,78% 100%,81% 50%,84% 100%,87% 20%,90% 100%,93% 40%,96% 100%,99% 30%,100% 100%,100% 0,0 0);
+  }
+
+  /* ============ TOC ACCORDION ============ */
+  .toc-bg{background:var(--cream);}
+  .accordion{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+  details{
+    background:#fff;
+    border:1px solid rgba(43,30,20,0.09);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  summary{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:20px 24px;
+    cursor:pointer;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:1.02rem;
+    color:var(--teal-deep);
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary .part-num{
+    color:var(--clay);
+    font-size:0.85rem;
+    margin-left:10px;
+  }
+  summary .plus{
+    flex:none;
+    width:26px;height:26px;
+    border-radius:50%;
+    background:var(--tan-light);
+    position:relative;
+  }
+  summary .plus::before,summary .plus::after{
+    content:"";
+    position:absolute;
+    background:var(--teal);
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+  }
+  summary .plus::before{width:11px;height:2px;}
+  summary .plus::after{width:2px;height:11px;transition:transform .25s ease;}
+  details[open] summary .plus::after{transform:translate(-50%,-50%) rotate(90deg) scaleY(0);}
+  .toc-list{
+    padding:0 24px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .toc-list li{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+    padding-bottom:8px;
+    border-bottom:1px dotted rgba(43,30,20,0.15);
+  }
+  .toc-list li span.pg{
+    margin-inline-start:auto;
+    font-weight:700;
+    color:var(--teal);
+    font-size:0.85rem;
+    flex:none;
+  }
+  .toc-list li:last-child{border-bottom:none;}
+
+  /* ============ PAGE GALLERY ============ */
+  .gallery-strip{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    padding:10px 4px 24px;
+    scroll-snap-type:x mandatory;
+  }
+  .gallery-strip::-webkit-scrollbar{height:6px;}
+  .gallery-strip::-webkit-scrollbar-thumb{background:var(--clay);border-radius:3px;}
+  .gallery-item{
+    flex:none;
+    width:230px;
+    scroll-snap-align:start;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    border:6px solid #fff;
+    cursor:zoom-in;
+    transition:transform .2s ease;
+  }
+  .gallery-item:hover{transform:translateY(-6px);}
+  .gallery-item img{display:block;}
+
+  .lightbox{
+    position:fixed;inset:0;
+    background:rgba(15,25,24,0.88);
+    display:none;
+    align-items:center;justify-content:center;
+    z-index:200;
+    padding:30px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-height:88vh;border-radius:6px;box-shadow:0 30px 60px rgba(0,0,0,0.5);}
+  .lightbox-close{
+    position:absolute;
+    top:24px;
+    inset-inline-end:28px;
+    color:#fff;
+    font-size:2rem;
+    line-height:1;
+    background:none;
+  }
+
+  /* ============ TESTIMONIALS ============ */
+  .testi-bg{background:var(--teal-deep);position:relative;}
+  .testi-bg .section-head h2{color:var(--cream);}
+  .testi-bg .section-head p{color:rgba(251,245,233,0.75);}
+  .chat-wall{
+    max-width:920px;
+    margin:0 auto;
+    columns:2 280px;
+    column-gap:18px;
+  }
+  @media(max-width:640px){.chat-wall{columns:1;}}
+  .bubble{
+    break-inside:avoid;
+    margin-bottom:18px;
+    background:#fff;
+    border-radius:10px;
+    padding:16px 18px;
+    font-size:0.92rem;
+    line-height:1.75;
+    color:var(--ink);
+    box-shadow:0 12px 24px -10px rgba(0,0,0,0.35);
+    position:relative;
+  }
+  .bubble.mine{
+    background:#DCF3D8;
+  }
+  .bubble .stamp{
+    display:block;
+    margin-top:10px;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    text-align:left;
+    opacity:0.7;
+  }
+
+  /* ============ FINAL CTA ============ */
+  .final-cta{
+    background:var(--teal);
+    padding:80px 0;
+    text-align:center;
+    position:relative;
+  }
+  .final-cta h2{
+    color:var(--cream);
+    font-size:clamp(1.8rem,3.6vw,2.6rem);
+    font-weight:800;
+  }
+  .final-cta p{
+    color:rgba(251,245,233,0.82);
+    margin-top:16px;
+    font-size:1.02rem;
+  }
+  .final-cta .btn-primary{margin-top:30px;}
+  .final-clock{
+    margin-top:18px;
+    display:inline-block;
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    color:#F4C89B;
+    letter-spacing:0.04em;
+    font-variant-numeric:tabular-nums;
+  }
+
+  footer{
+    background:var(--teal-deep);
+    color:rgba(251,245,233,0.6);
+    padding:36px 0;
+    text-align:center;
+    font-size:0.85rem;
+  }
+  footer .brand-name{color:var(--cream);}
+  footer .foot-brand{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  footer .foot-brand img{width:32px;height:32px;border-radius:50%;}
+
+  ::selection{background:var(--teal);color:#fff;}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+  <!-- ============ URGENCY DROPDOWN ============ -->
+  <div class="urgency" id="urgency">
+    <button class="urgency-toggle" id="urgencyToggle" aria-expanded="false">
+      <span class="flame">🔥</span>
+      <span>عرض لفترة محدودة – ينتهي خلال</span>
+      <span class="clock" id="clockTop">02:00:00</span>
+      <span class="chev"></span>
+    </button>
+    <div class="urgency-panel">
+      <div class="urgency-panel-inner">
+        <p>استعجل! السعر الحالي متاح لمدة <strong>ساعتين بس</strong> من دلوقتي — بعدها السعر بيرجع تاني للسعر الأساسي. لو بتفكر تدخل مجال التركيبات، دي فرصتك توفر وتاخد الدليل بأقل سعر.</p>
+        <a href="http://wa.me/201210465920" class="urgency-cta">احجز نسختك دلوقتي ⏳</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <nav>
+    <div class="wrap nav-inner">
+      <div class="brand">
+        <img src="assets/logo_crop.png" alt="Cosmo Lite">
+        <span class="brand-name">Cosmo Lite</span>
+      </div>
+      <div class="nav-links nav-mobile-hide">
+        <a href="#inside">جوه الكتاب</a>
+        <a href="#preview">صفحات من الكتاب</a>
+        <a href="#reviews">آراء القراء</a>
+        <a href="http://wa.me/201210465920" class="nav-cta">اطلب الآن</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">دليل التركيبات والتجميل</span>
+        <h1>رحلة البراند<br><span>بتاعك تبدأ هنا</span></h1>
+        <p class="hero-sub">أشمل دليل لتعلّم التركيبات وتأسيس البراند بتاعك. وفّر وقتك وفلوسك، وامشِ على طريق مجرّب بيشرحلك خطوة بخطوة من أول الفكرة لحد المنتج جاهز في السوق.</p>
+        <ul class="checklist">
+          <li><span class="check-badge"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span> إزاي تعمل تركيبة صح</li>
+          <li><span class="check-badge"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span> أسرار التعامل مع المصانع</li>
+          <li><span class="check-badge"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span> خطوات التسجيل والتسعير</li>
+        </ul>
+        <div class="hero-actions">
+          <a href="http://wa.me/201210465920" class="btn-primary">اطلب نسختك الآن</a>
+          <span class="price-note">العرض بينتهي خلال <span id="clockInline">02:00:00</span></span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="book-photo">
+          <img src="assets/book_crop.png" alt="غلاف كتاب رحلة البراند - Cosmo Lite">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ JOURNEY STRIP ============ -->
+  <div class="journey">
+    <div class="wrap">
+      <ul>
+        <li><span class="step">Formulation</span></li>
+        <li class="arrow">←</li>
+        <li><span class="step">Registration</span></li>
+        <li class="arrow">←</li>
+        <li><span class="step">Manufacturing</span></li>
+        <li class="arrow">←</li>
+        <li><span class="step">Pricing</span></li>
+        <li class="arrow">←</li>
+        <li><span class="step">Business Management</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ TABLE OF CONTENTS ============ -->
+  <section class="section toc-bg" id="inside">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">الفهرس</span>
+        <h2>هتلاقي جوه الكتاب إيه بالظبط</h2>
+        <p>الكتاب مقسّم لخطوات متتالية، من أساسيات التركيبات لحد إدارة البراند وتسعيره. اضغط على أي جزء عشان تشوف اللي جواه.</p>
+      </div>
+
+      <div class="accordion">
+        <details open>
+          <summary><span><span class="part-num">01</span>مقدمة إلى مجال التركيبات العلاجية والتجميلية</span><span class="plus"></span></summary>
+          <ul class="toc-list">
+            <li>الفرق بين الـ Cosmetics والـ Cosmoceuticals <span class="pg">01</span></li>
+            <li>الأدوات اللي هتحتاجها <span class="pg">06</span></li>
+            <li>أهمية الـ pH ودوره في مجال التركيبات <span class="pg">09</span></li>
+            <li>MSDS (Material Safety Data Sheet) <span class="pg">12</span></li>
+            <li>إزاي تقرأ التركيبة التجميلية بشكل صحيح؟ <span class="pg">13</span></li>
+            <li>إزاي تعمل كريم أورجانيك؟ <span class="pg">17</span></li>
+            <li>إزاي تعمل شامبو أورجانيك؟ <span class="pg">21</span></li>
+            <li>إزاي تكتب "وصفة" (Formula) لمستحضر تجميلي باحترافية؟ <span class="pg">25</span></li>
+            <li>إزاي تكتب الأسماء الصحيحة للمكونات على علبة أي منتج؟ <span class="pg">26</span></li>
+            <li>إزاي ترتّب المكونات لما تيجي تكتبها على علبة أي منتج؟ <span class="pg">28</span></li>
+            <li>دور المواد الحافظة في مستحضرات التجميل <span class="pg">30</span></li>
+            <li>فترة الصلاحية واختبار الثبات <span class="pg">32</span></li>
+            <li>إزاي تبني براند أو ماركة مستحضرات تجميل؟ <span class="pg">35</span></li>
+            <li>أنواع مستحضرات التجميل المتداولة في السوق <span class="pg">38</span></li>
+            <li>أساسيات كيميائية هتفرّق معاك في أي فورميوليشن <span class="pg">45</span></li>
+            <li>الادعاءات التسويقية في مستحضرات التجميل <span class="pg">46</span></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><span><span class="part-num">02</span>خطوات تحضير المستحضرات التجميلية والعلاجية عمليًا</span><span class="plus"></span></summary>
+          <ul class="toc-list">
+            <li>How to make Shower Gel <span class="pg">53</span></li>
+            <li>How to make Body Lotion <span class="pg">59</span></li>
+            <li>How to make Lightweight Conditioner for Oily Hair <span class="pg">64</span></li>
+            <li>How to make an Eye Contour Cream <span class="pg">70</span></li>
+            <li>How to make a Deodorant Roll On <span class="pg">78</span></li>
+            <li>How to make Gel Face Wash <span class="pg">83</span></li>
+            <li>How to make Brightening Moisturizing Cream <span class="pg">90</span></li>
+            <li>How to make Ultra-Moisturizing Conditioner for Dry &amp; Frizzy Hair <span class="pg">98</span></li>
+            <li>How to make Skin Brightening &amp; Gentle Exfoliation Cream <span class="pg">104</span></li>
+            <li>How to make Hair Gel <span class="pg">113</span></li>
+            <li>How to make Face Scrub <span class="pg">120</span></li>
+            <li>How to make Face Foam Cleanser <span class="pg">129</span></li>
+            <li>How to make Face Toner <span class="pg">133</span></li>
+            <li>How to make Deodorant Stick <span class="pg">139</span></li>
+            <li>How to make Body Butter <span class="pg">145</span></li>
+            <li>How to make Gel Cream Moisturizer <span class="pg">154</span></li>
+            <li>How to make Nail Serum Oil for Healthy Nail Growth <span class="pg">160</span></li>
+            <li>How to make Coffee-Enriched Lotion for Stretch Mark Repair <span class="pg">164</span></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><span><span class="part-num">03</span>مشاكل وحلها أثناء شغلك في مجال التركيبات</span><span class="plus"></span></summary>
+          <ul class="toc-list">
+            <li>مشاكل وحلها أثناء شغلك في مجال التركيبات <span class="pg">173</span></li>
+            <li>الاختبارات اللي لازم تعملها على أي مستحضر تجميلي <span class="pg">180</span></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><span><span class="part-num">04</span>كيف تبني شركتك في عالم التجميل؟</span><span class="plus"></span></summary>
+          <ul class="toc-list">
+            <li>ايه الجهات اللي هتحتاج تتعامل معاها؟ <span class="pg">187</span></li>
+            <li>إزاي تختار المصنع المناسب للبراند بتاعك؟ <span class="pg">189</span></li>
+            <li>مقدمي خدمات التسجيل <span class="pg">192</span></li>
+            <li>فاتورة تسجيل منتج تجميلي في وزارة الصحة <span class="pg">195</span></li>
+            <li>خطوات تسجيل المنتج (مرحلة ما قبل التسجيل، نصايح التصميم، المواد الفعالة، الأسماء المقترحة) <span class="pg">196</span></li>
+            <li>مرحلة تصنيع المنتج التجميلي داخل المصنع (البريف، العينة الأولى، الـFeedback، الـPackaging، الـBatch Production) <span class="pg">205</span></li>
+            <li>Production Lead Time وأعمدة التصنيع الأساسية <span class="pg">214</span></li>
+            <li>إزاي تضمن إن المنتج اللي وصلك من المصنع هو اللي فعلاً اتفقتوا عليه؟ <span class="pg">216</span></li>
+            <li>ليه ممكن التركيبة تبوظ في المصنع؟ <span class="pg">218</span></li>
+            <li>إزاي تعمل اختبارات "تحمل" للمنتج بتاعك بعد أول Batch؟ <span class="pg">219</span></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><span><span class="part-num">05</span>تسعير المنتج التجميلي وإدارة البيزنس</span><span class="plus"></span></summary>
+          <ul class="toc-list">
+            <li>استراتيجيات التسعير <span class="pg">222</span></li>
+            <li>إزاي تختار العميل الصح وتحدد السعر اللي يخليه يشتري وهو مغمّض؟ <span class="pg">228</span></li>
+            <li>مرحلة مراجعة الحسابات <span class="pg">230</span></li>
+            <li>إزاي البراندات الشاطرة بتتبني؟ <span class="pg">232</span></li>
+            <li>سر التسعير الحقيقي <span class="pg">233</span></li>
+            <li>أساسيات إدارة أي براند ناجح في 5 عناصر <span class="pg">235</span></li>
+            <li>3 أعمدة رئيسية لنجاح أي بيزنس أو مشروع <span class="pg">236</span></li>
+            <li>إزاي تدير بضاعتك (المخزون)، وليه السيولة أو الكاش هي روح أي بيزنس؟ <span class="pg">238</span></li>
+            <li>نصايح مهمة جدًا ليك كـ Formulator عشان ما يتضحكش عليك بالكلام بتاع الموردين <span class="pg">240</span></li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="torn-divider"></div>
+
+  <!-- ============ PAGE PREVIEW GALLERY ============ -->
+  
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">&times;</button>
+    <img src="" alt="" id="lightboxImg">
+  </div>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section testi-bg" id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">آراء حقيقية</span>
+        <h2>اللي قروا الكتاب قالوا إيه</h2>
+        <p>رسايل حقيقية من قراء اشتروا الكتاب وجربوه.</p>
+      </div>
+      <div class="chat-wall">
+        <div class="bubble">الكتاب جميل جدًا والمعلومات اللي فيه قيمة. الوحدة إن النسخة السوفت صعبة في التعامل، كنت محتاجة تكون مطبوعة تسهّل عليا ارجعلها وقت الشغل.<span class="stamp">21:04</span></div>
+        <div class="bubble">بشكركم على الكتاب الرائع ده، مفيد ومحتواه كبير 🥰 كمان شكرًا لذوقكم في التعامل 🌸<span class="stamp">15:38</span></div>
+        <div class="bubble mine">بجد شكرًا يادكتور على كلامك الحلو 💖✨<span class="stamp">15:39</span></div>
+        <div class="bubble">حقيقي الملف حلو جدًا، وحلو موضوع قناة التليجرام كمان، فكرة حلوة.<span class="stamp">18:21</span></div>
+        <div class="bubble">شكرًا جدًا، حقيقي الكتاب من أروع الكتب اللي قريتها ومفيد جدًا. دايمًا مميزين وفي نجاح مستمر ❤️<span class="stamp">17:40</span></div>
+        <div class="bubble">شرح الكتاب مبسّط وسهل الفهم + مجمّع لأغلب الحالات الممكن نتعرض ليها. شكرًا على المجهود في تجميع المعلومات وتسهيلها.<span class="stamp">15:29</span></div>
+        <div class="bubble">ألقيت نظرة عامة على الكتاب، وأنا كل مشكلتي إني معنديش علم بكل الـ Products المتوفرة. وحرفيًا أحلى فكرة الكتاب عملتوها، والأحلى المتابعة الدايمة. Thanks to the team ❤️🌹<span class="stamp">21:51</span></div>
+        <div class="bubble">كفاية تواصلكم وذوقكم في التعامل 🌸🌸 حقيقي صفحة محترمة ومحتوى محترم 👏<span class="stamp">20:09</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final-cta" id="order">
+    <div class="wrap">
+      <h2>ابدأ رحلة البراند بتاعك دلوقتي</h2>
+      <p>اطلب نسختك من الدليل قبل ما ينتهي العرض، وابدأ خطوتك الأولى في عالم التركيبات باحترافية.</p>
+      <br>
+      <a href="http://wa.me/201210465920" class="btn-primary">اطلب نسختك الآن</a>
+      <div class="final-clock">العرض بينتهي خلال <span id="clockBottom">02:00:00</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-brand">
+        <img src="assets/logo_crop.png" alt="Cosmo Lite">
+        <span class="brand-name" style="font-family:'Cairo',sans-serif;font-weight:800;">Cosmo Lite</span>
+      </div>
+      <p>© 2026 Cosmo Lite — رحلة البراند. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+<script>
+  // ---------- Urgency dropdown ----------
+  const urgency = document.getElementById('urgency');
+  const toggle = document.getElementById('urgencyToggle');
+  toggle.addEventListener('click', () => {
+    const isOpen = urgency.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  // ---------- Countdown timer (2 hours, resets on reload) ----------
+  const TWO_HOURS = 2 * 60 * 60 * 1000;
+  const target = Date.now() + TWO_HOURS;
+  const clocks = [
+    document.getElementById('clockTop'),
+    document.getElementById('clockInline'),
+    document.getElementById('clockBottom')
+  ].filter(Boolean);
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function tick(){
+    let diff = target - Date.now();
+    if(diff <= 0){ diff = TWO_HOURS; } // loop the offer window
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    clocks.forEach(el => el.textContent = str);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---------- Gallery lightbox ----------
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if(e.target === lightbox) lightbox.classList.remove('open'); });
+</script>
+</body>
+</html>
