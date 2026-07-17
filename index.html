@@ -196,8 +196,13 @@
     align-items:center;
   }
   @media(max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
+    .hero-grid{
+      grid-template-columns:1fr;
+      display:flex;
+      flex-direction:column-reverse; /* Reverses order for mobile */
+    }
     .hero{padding:44px 0 60px;}
+    .hero-visual { margin-bottom: 30px; }
   }
   .hero h1{
     font-size:clamp(2.4rem,5vw,3.6rem);
@@ -412,50 +417,6 @@
   }
   .toc-list li:last-child{border-bottom:none;}
 
-  /* ============ PAGE GALLERY ============ */
-  .gallery-strip{
-    display:flex;
-    gap:20px;
-    overflow-x:auto;
-    padding:10px 4px 24px;
-    scroll-snap-type:x mandatory;
-  }
-  .gallery-strip::-webkit-scrollbar{height:6px;}
-  .gallery-strip::-webkit-scrollbar-thumb{background:var(--clay);border-radius:3px;}
-  .gallery-item{
-    flex:none;
-    width:230px;
-    scroll-snap-align:start;
-    border-radius:6px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-    border:6px solid #fff;
-    cursor:zoom-in;
-    transition:transform .2s ease;
-  }
-  .gallery-item:hover{transform:translateY(-6px);}
-  .gallery-item img{display:block;}
-
-  .lightbox{
-    position:fixed;inset:0;
-    background:rgba(15,25,24,0.88);
-    display:none;
-    align-items:center;justify-content:center;
-    z-index:200;
-    padding:30px;
-  }
-  .lightbox.open{display:flex;}
-  .lightbox img{max-height:88vh;border-radius:6px;box-shadow:0 30px 60px rgba(0,0,0,0.5);}
-  .lightbox-close{
-    position:absolute;
-    top:24px;
-    inset-inline-end:28px;
-    color:#fff;
-    font-size:2rem;
-    line-height:1;
-    background:none;
-  }
-
   /* ============ TESTIMONIALS ============ */
   .testi-bg{background:var(--teal-deep);position:relative;}
   .testi-bg .section-head h2{color:var(--cream);}
@@ -479,9 +440,7 @@
     box-shadow:0 12px 24px -10px rgba(0,0,0,0.35);
     position:relative;
   }
-  .bubble.mine{
-    background:#DCF3D8;
-  }
+  .bubble.mine{background:#DCF3D8;}
   .bubble .stamp{
     display:block;
     margin-top:10px;
@@ -542,7 +501,6 @@
 </head>
 <body>
 
-  <!-- ============ URGENCY DROPDOWN ============ -->
   <div class="urgency" id="urgency">
     <button class="urgency-toggle" id="urgencyToggle" aria-expanded="false">
       <span class="flame">🔥</span>
@@ -558,7 +516,6 @@
     </div>
   </div>
 
-  <!-- ============ NAV ============ -->
   <nav>
     <div class="wrap nav-inner">
       <div class="brand">
@@ -567,14 +524,12 @@
       </div>
       <div class="nav-links nav-mobile-hide">
         <a href="#inside">جوه الكتاب</a>
-        <a href="#preview">صفحات من الكتاب</a>
         <a href="#reviews">آراء القراء</a>
         <a href="http://wa.me/201210465920" class="nav-cta">اطلب الآن</a>
       </div>
     </div>
   </nav>
 
-  <!-- ============ HERO ============ -->
   <header class="hero">
     <div class="wrap hero-grid">
       <div>
@@ -599,7 +554,6 @@
     </div>
   </header>
 
-  <!-- ============ JOURNEY STRIP ============ -->
   <div class="journey">
     <div class="wrap">
       <ul>
@@ -616,141 +570,41 @@
     </div>
   </div>
 
-  <!-- ============ TABLE OF CONTENTS ============ -->
   <section class="section toc-bg" id="inside">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">الفهرس</span>
         <h2>هتلاقي جوه الكتاب إيه بالظبط</h2>
-        <p>الكتاب مقسّم لخطوات متتالية، من أساسيات التركيبات لحد إدارة البراند وتسعيره. اضغط على أي جزء عشان تشوف اللي جواه.</p>
       </div>
-
       <div class="accordion">
         <details open>
           <summary><span><span class="part-num">01</span>مقدمة إلى مجال التركيبات العلاجية والتجميلية</span><span class="plus"></span></summary>
           <ul class="toc-list">
             <li>الفرق بين الـ Cosmetics والـ Cosmoceuticals <span class="pg">01</span></li>
-            <li>الأدوات اللي هتحتاجها <span class="pg">06</span></li>
             <li>أهمية الـ pH ودوره في مجال التركيبات <span class="pg">09</span></li>
-            <li>MSDS (Material Safety Data Sheet) <span class="pg">12</span></li>
-            <li>إزاي تقرأ التركيبة التجميلية بشكل صحيح؟ <span class="pg">13</span></li>
-            <li>إزاي تعمل كريم أورجانيك؟ <span class="pg">17</span></li>
-            <li>إزاي تعمل شامبو أورجانيك؟ <span class="pg">21</span></li>
             <li>إزاي تكتب "وصفة" (Formula) لمستحضر تجميلي باحترافية؟ <span class="pg">25</span></li>
-            <li>إزاي تكتب الأسماء الصحيحة للمكونات على علبة أي منتج؟ <span class="pg">26</span></li>
-            <li>إزاي ترتّب المكونات لما تيجي تكتبها على علبة أي منتج؟ <span class="pg">28</span></li>
-            <li>دور المواد الحافظة في مستحضرات التجميل <span class="pg">30</span></li>
-            <li>فترة الصلاحية واختبار الثبات <span class="pg">32</span></li>
-            <li>إزاي تبني براند أو ماركة مستحضرات تجميل؟ <span class="pg">35</span></li>
-            <li>أنواع مستحضرات التجميل المتداولة في السوق <span class="pg">38</span></li>
-            <li>أساسيات كيميائية هتفرّق معاك في أي فورميوليشن <span class="pg">45</span></li>
-            <li>الادعاءات التسويقية في مستحضرات التجميل <span class="pg">46</span></li>
-          </ul>
-        </details>
-
-        <details>
-          <summary><span><span class="part-num">02</span>خطوات تحضير المستحضرات التجميلية والعلاجية عمليًا</span><span class="plus"></span></summary>
-          <ul class="toc-list">
-            <li>How to make Shower Gel <span class="pg">53</span></li>
-            <li>How to make Body Lotion <span class="pg">59</span></li>
-            <li>How to make Lightweight Conditioner for Oily Hair <span class="pg">64</span></li>
-            <li>How to make an Eye Contour Cream <span class="pg">70</span></li>
-            <li>How to make a Deodorant Roll On <span class="pg">78</span></li>
-            <li>How to make Gel Face Wash <span class="pg">83</span></li>
-            <li>How to make Brightening Moisturizing Cream <span class="pg">90</span></li>
-            <li>How to make Ultra-Moisturizing Conditioner for Dry &amp; Frizzy Hair <span class="pg">98</span></li>
-            <li>How to make Skin Brightening &amp; Gentle Exfoliation Cream <span class="pg">104</span></li>
-            <li>How to make Hair Gel <span class="pg">113</span></li>
-            <li>How to make Face Scrub <span class="pg">120</span></li>
-            <li>How to make Face Foam Cleanser <span class="pg">129</span></li>
-            <li>How to make Face Toner <span class="pg">133</span></li>
-            <li>How to make Deodorant Stick <span class="pg">139</span></li>
-            <li>How to make Body Butter <span class="pg">145</span></li>
-            <li>How to make Gel Cream Moisturizer <span class="pg">154</span></li>
-            <li>How to make Nail Serum Oil for Healthy Nail Growth <span class="pg">160</span></li>
-            <li>How to make Coffee-Enriched Lotion for Stretch Mark Repair <span class="pg">164</span></li>
-          </ul>
-        </details>
-
-        <details>
-          <summary><span><span class="part-num">03</span>مشاكل وحلها أثناء شغلك في مجال التركيبات</span><span class="plus"></span></summary>
-          <ul class="toc-list">
-            <li>مشاكل وحلها أثناء شغلك في مجال التركيبات <span class="pg">173</span></li>
-            <li>الاختبارات اللي لازم تعملها على أي مستحضر تجميلي <span class="pg">180</span></li>
-          </ul>
-        </details>
-
-        <details>
-          <summary><span><span class="part-num">04</span>كيف تبني شركتك في عالم التجميل؟</span><span class="plus"></span></summary>
-          <ul class="toc-list">
-            <li>ايه الجهات اللي هتحتاج تتعامل معاها؟ <span class="pg">187</span></li>
-            <li>إزاي تختار المصنع المناسب للبراند بتاعك؟ <span class="pg">189</span></li>
-            <li>مقدمي خدمات التسجيل <span class="pg">192</span></li>
-            <li>فاتورة تسجيل منتج تجميلي في وزارة الصحة <span class="pg">195</span></li>
-            <li>خطوات تسجيل المنتج (مرحلة ما قبل التسجيل، نصايح التصميم، المواد الفعالة، الأسماء المقترحة) <span class="pg">196</span></li>
-            <li>مرحلة تصنيع المنتج التجميلي داخل المصنع (البريف، العينة الأولى، الـFeedback، الـPackaging، الـBatch Production) <span class="pg">205</span></li>
-            <li>Production Lead Time وأعمدة التصنيع الأساسية <span class="pg">214</span></li>
-            <li>إزاي تضمن إن المنتج اللي وصلك من المصنع هو اللي فعلاً اتفقتوا عليه؟ <span class="pg">216</span></li>
-            <li>ليه ممكن التركيبة تبوظ في المصنع؟ <span class="pg">218</span></li>
-            <li>إزاي تعمل اختبارات "تحمل" للمنتج بتاعك بعد أول Batch؟ <span class="pg">219</span></li>
-          </ul>
-        </details>
-
-        <details>
-          <summary><span><span class="part-num">05</span>تسعير المنتج التجميلي وإدارة البيزنس</span><span class="plus"></span></summary>
-          <ul class="toc-list">
-            <li>استراتيجيات التسعير <span class="pg">222</span></li>
-            <li>إزاي تختار العميل الصح وتحدد السعر اللي يخليه يشتري وهو مغمّض؟ <span class="pg">228</span></li>
-            <li>مرحلة مراجعة الحسابات <span class="pg">230</span></li>
-            <li>إزاي البراندات الشاطرة بتتبني؟ <span class="pg">232</span></li>
-            <li>سر التسعير الحقيقي <span class="pg">233</span></li>
-            <li>أساسيات إدارة أي براند ناجح في 5 عناصر <span class="pg">235</span></li>
-            <li>3 أعمدة رئيسية لنجاح أي بيزنس أو مشروع <span class="pg">236</span></li>
-            <li>إزاي تدير بضاعتك (المخزون)، وليه السيولة أو الكاش هي روح أي بيزنس؟ <span class="pg">238</span></li>
-            <li>نصايح مهمة جدًا ليك كـ Formulator عشان ما يتضحكش عليك بالكلام بتاع الموردين <span class="pg">240</span></li>
           </ul>
         </details>
       </div>
     </div>
   </section>
 
-  <div class="torn-divider"></div>
-
-  <!-- ============ PAGE PREVIEW GALLERY ============ -->
-  
-
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">&times;</button>
-    <img src="" alt="" id="lightboxImg">
-  </div>
-
-  <!-- ============ TESTIMONIALS ============ -->
   <section class="section testi-bg" id="reviews">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">آراء حقيقية</span>
         <h2>اللي قروا الكتاب قالوا إيه</h2>
-        <p>رسايل حقيقية من قراء اشتروا الكتاب وجربوه.</p>
       </div>
       <div class="chat-wall">
-        <div class="bubble">الكتاب جميل جدًا والمعلومات اللي فيه قيمة. الوحدة إن النسخة السوفت صعبة في التعامل، كنت محتاجة تكون مطبوعة تسهّل عليا ارجعلها وقت الشغل.<span class="stamp">21:04</span></div>
-        <div class="bubble">بشكركم على الكتاب الرائع ده، مفيد ومحتواه كبير 🥰 كمان شكرًا لذوقكم في التعامل 🌸<span class="stamp">15:38</span></div>
-        <div class="bubble mine">بجد شكرًا يادكتور على كلامك الحلو 💖✨<span class="stamp">15:39</span></div>
-        <div class="bubble">حقيقي الملف حلو جدًا، وحلو موضوع قناة التليجرام كمان، فكرة حلوة.<span class="stamp">18:21</span></div>
-        <div class="bubble">شكرًا جدًا، حقيقي الكتاب من أروع الكتب اللي قريتها ومفيد جدًا. دايمًا مميزين وفي نجاح مستمر ❤️<span class="stamp">17:40</span></div>
-        <div class="bubble">شرح الكتاب مبسّط وسهل الفهم + مجمّع لأغلب الحالات الممكن نتعرض ليها. شكرًا على المجهود في تجميع المعلومات وتسهيلها.<span class="stamp">15:29</span></div>
-        <div class="bubble">ألقيت نظرة عامة على الكتاب، وأنا كل مشكلتي إني معنديش علم بكل الـ Products المتوفرة. وحرفيًا أحلى فكرة الكتاب عملتوها، والأحلى المتابعة الدايمة. Thanks to the team ❤️🌹<span class="stamp">21:51</span></div>
-        <div class="bubble">كفاية تواصلكم وذوقكم في التعامل 🌸🌸 حقيقي صفحة محترمة ومحتوى محترم 👏<span class="stamp">20:09</span></div>
+        <div class="bubble">الكتاب جميل جدًا والمعلومات اللي فيه قيمة.<span class="stamp">21:04</span></div>
+        <div class="bubble">بشكركم على الكتاب الرائع ده، مفيد ومحتواه كبير 🥰<span class="stamp">15:38</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ FINAL CTA ============ -->
   <section class="final-cta" id="order">
     <div class="wrap">
       <h2>ابدأ رحلة البراند بتاعك دلوقتي</h2>
-      <p>اطلب نسختك من الدليل قبل ما ينتهي العرض، وابدأ خطوتك الأولى في عالم التركيبات باحترافية.</p>
-      <br>
       <a href="http://wa.me/201210465920" class="btn-primary">اطلب نسختك الآن</a>
       <div class="final-clock">العرض بينتهي خلال <span id="clockBottom">02:00:00</span></div>
     </div>
@@ -758,16 +612,11 @@
 
   <footer>
     <div class="wrap">
-      <div class="foot-brand">
-        <img src="assets/logo_crop.png" alt="Cosmo Lite">
-        <span class="brand-name" style="font-family:'Cairo',sans-serif;font-weight:800;">Cosmo Lite</span>
-      </div>
       <p>© 2026 Cosmo Lite — رحلة البراند. جميع الحقوق محفوظة.</p>
     </div>
   </footer>
 
 <script>
-  // ---------- Urgency dropdown ----------
   const urgency = document.getElementById('urgency');
   const toggle = document.getElementById('urgencyToggle');
   toggle.addEventListener('click', () => {
@@ -775,7 +624,6 @@
     toggle.setAttribute('aria-expanded', isOpen);
   });
 
-  // ---------- Countdown timer (2 hours, resets on reload) ----------
   const TWO_HOURS = 2 * 60 * 60 * 1000;
   const target = Date.now() + TWO_HOURS;
   const clocks = [
@@ -788,7 +636,7 @@
 
   function tick(){
     let diff = target - Date.now();
-    if(diff <= 0){ diff = TWO_HOURS; } // loop the offer window
+    if(diff <= 0){ diff = TWO_HOURS; }
     const h = Math.floor(diff / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
@@ -797,19 +645,6 @@
   }
   tick();
   setInterval(tick, 1000);
-
-  // ---------- Gallery lightbox ----------
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
-  document.querySelectorAll('.gallery-item img').forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('open');
-    });
-  });
-  document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
-  lightbox.addEventListener('click', e => { if(e.target === lightbox) lightbox.classList.remove('open'); });
 </script>
 </body>
 </html>
